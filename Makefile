@@ -25,4 +25,4 @@ push: build
 	docker push "$(IMAGE_NAME):latest"
 
 supported_versions:
-	bash get_hugo_versions | tee supported_versions
+	docker run --rm -t -v "$(CURDIR)":/v -w /v buildpack-deps:scm sh -c 'bash get_hugo_versions | tee supported_versions'

@@ -16,7 +16,7 @@ for version in $VERSIONS; do
     # Only support things that follow the latest naming conventions
     if [ "$status" = "200" ]; then
         # Only do it if we get a binary named hugo, why name things like hugo-{kernel}-{uname -m}?
-        if curl -fsSL $dl_url | tar -tf - | grep "^hugo$" >/dev/null; then
+        if curl -fsSL "$dl_url" | tar -tzf - | grep "^hugo$" >/dev/null; then
             echo "$version"
         fi
     fi

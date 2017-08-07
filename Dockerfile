@@ -8,4 +8,5 @@ RUN curl -fsSL ${HUGO_DL} | tar xvz -C /usr/local/bin
 
 FROM scratch
 COPY --from=build /usr/local/bin/hugo /hugo
+EXPOSE 1313
 ENTRYPOINT ["/hugo"]

@@ -5,6 +5,8 @@ The minimalist of docker images for Hugo!
 Clocking in at about 4MB this docker image contains
 a `hugo` binary and nothing else!
 
+![So small](https://media.giphy.com/media/wzE1IlaPMoNXi/giphy.gif)
+
 Also, automated builds will be off until https://hub.docker.com
 updates their version of docker to a version that supports
 multi-stage docker builds.

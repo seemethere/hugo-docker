@@ -5,8 +5,6 @@ The minimalist of docker images for Hugo!
 Clocking in at about 4MB this docker image contains
 a `hugo` binary and nothing else!
 
-Currently only `0.25.1`
-
 Also, automated builds will be off until https://hub.docker.com
 updates their version of docker to a version that supports
 multi-stage docker builds.
@@ -25,5 +23,4 @@ Static site generated at "$(pwd)/public"
 
 ## TODO
 
-- [  ] Figure out why the development server isn't working
-- [  ] Possibly support all versions of hugo? (If that's wanted)
+- [ ] Figure out why the development server isn't working

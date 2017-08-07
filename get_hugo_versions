@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Grab all the tags for hugo, order them by semantic versioning
+VERSIONS="$(\
+    git ls-remote https://github.com/gohugoio/hugo.git | \
+        grep tags | \
+        awk '{print $2}' | \
+        sed '/{}/d' | \
+        sed 's/^refs\/tags\/v//' | \
+        sort -t. -k1,1nr -k2,2nr -k3,3nr \
+)"
+
+for version in $VERSIONS; do
+    dl_url="https://github.com/gohugoio/hugo/releases/download/v${version}/hugo_${version}_Linux-64bit.tar.gz"
+    status="$(curl -fsSL -o /dev/null -w "%{http_code}" "$dl_url" 2>/dev/null)"
+    # Only support things that follow the latest naming conventions
+    if [ "$status" = "200" ]; then
+        # Only do it if we get a binary named hugo, why name things like hugo-{kernel}-{uname -m}?
+        if curl -fsSL $dl_url | tar -tf - | grep "^hugo$" >/dev/null; then
+            echo "$version"
+        fi
+    fi
+done

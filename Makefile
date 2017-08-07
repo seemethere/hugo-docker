@@ -1,5 +1,5 @@
 VERSIONS?=$(shell cat supported_versions)
-LATEST?=0.25.1
+LATEST?=$(shell head -n 1 supported_versions)
 IMAGE_NAME=seemethere/hugo-docker
 
 all: clean build push

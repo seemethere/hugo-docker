@@ -1,6 +1,17 @@
 VERSIONS?=$(shell cat supported_versions)
 LATEST?=$(shell head -n 1 supported_versions)
 IMAGE_NAME=seemethere/hugo-docker
+IMG_RUN=docker run --rm -it \
+	--name img-hugo-docker \
+	--volume $(CURDIR):/home/user/src:ro \
+	--workdir /home/user/src \
+	--volume "$$HOME/.docker:/root/.docker:ro" \
+	--cap-add SETGID \
+	--cap-add SETUID \
+	--security-opt apparmor=unconfined \
+	--security-opt seccomp=unconfined \
+	r.j3ss.co/img
+BUILD=$(IMG_RUN) build
 
 all: clean build push
 
@@ -13,9 +24,9 @@ clean:
 .PHONY: build
 build:
 	for version in $(VERSIONS); do \
-		docker build --build-arg HUGO_VERSION=$$version -t "$(IMAGE_NAME):$$version" .; \
+		$(BUILD) -t "$(IMAGE_NAME):$$version" --build-arg HUGO_VERSION=$$version .; \
 	done
-	docker build --build-arg HUGO_VERSION=$(LATEST) -t "$(IMAGE_NAME):latest" .
+	$(BUILD) -t "$(IMAGE_NAME):latest" --build-arg HUGO_VERSION=$(LATEST) .
 
 .PHONY: push
 push: build
